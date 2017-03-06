@@ -16,7 +16,7 @@ class ShutterDevice(Base):
     ip = Column(String(15))
     extend_existing = True
     def __repr__(self):
-        return "<ShutterDevice(location='{}, ip={}>".format(self.location, self.ip)
+        return "<ShutterDevice(location='{}, address={}>".format(self.location, self.ip)
     
 
 Base.metadata.create_all(engine)
