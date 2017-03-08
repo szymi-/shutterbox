@@ -43,13 +43,12 @@ class ShutterManager:
         except polling.TimeoutException:
             return False
     
-    def tilt(self, direction='up', time=1):
-        if direction == 'up':
-            self.up()
-        elif direction == 'down':
-            self.down()
+    async def tilt(self, time=1):
+        await self.down()
+        self.is_in_position(100)
+        await self.up()
         sleep(time)
-        self.stop()
+        await self.stop()
 
     @staticmethod
     async def _send_command(url):

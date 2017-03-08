@@ -42,27 +42,12 @@ if action not in ['up', 'down', 'stop', 'status', 'tilt']:
 tasks = []
 
 for shutter in shutters:
-    tasks.append(
-        getattr(shutter, action_map[action])()
-    )
+    if action == 'tilt':
+        tasks.append(shutter.tilt(tilt))
+    else:
+        tasks.append(
+            getattr(shutter, action)()
+        )
 
 result = loop.run_until_complete(asyncio.gather(*tasks))
 logging.info('Action: {}, result: {}'.format(action, result))
-
-if action == 'tilt':
-    for shutter in shutters:
-        shutter.is_in_position(100)
-
-    tasks2 = []
-    for shutter in shutters:
-        tasks2.append(shutter.up())
-    result = loop.run_until_complete(asyncio.gather(*tasks2))
-    logging.info('Action: {}, result: {}'.format(action, result))
-
-    sleep(tilt)
-
-    tasks3 = []
-    for shutter in shutters:
-        tasks3.append(shutter.stop())
-    result = loop.run_until_complete(asyncio.gather(*tasks3))
-    logging.info('Action: {}, result: {}'.format(action, result))
