@@ -2,6 +2,7 @@
 import requests
 import polling
 import asyncio
+import logging
 
 from aiohttp import ClientSession
 
@@ -12,6 +13,10 @@ class ShutterManager:
 
     def __init__(self, address):
         self.address = address
+        self.logger = logging.getLogger('blebox.ShutterManager')
+
+    def __repr__(self):
+        return self.address
 
     def up(self, *args):
         url = 'http://{}/s/u'.format(self.address)
@@ -54,9 +59,11 @@ class ShutterManager:
         await asyncio.sleep(time)
         await self.stop()
 
-    @staticmethod
-    async def _send_command(url):
+    async def _send_command(self, url):
         async with ClientSession() as session:
             async with session.get(url) as response:
-                json = await response.json()
+                try:
+                    json = await response.json()
+                except Exception as e:
+                    self.logger.exception(e)
                 return json, response.status
