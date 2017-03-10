@@ -12,11 +12,11 @@ class Cron:
         self.now = datetime.datetime.now(self.location.tzinfo)
         self.sun = self.location.sun()
         self.sunrise = self.sun['sunrise']
-        #self.sunrise = datetime.datetime.now(self.location.tzinfo) + datetime.timedelta(seconds=5)
+        #self.sunrise = datetime.datetime.now(self.location.tzinfo) + datetime.timedelta(seconds=(60*15)+30)
         self.noon = self.sun['noon']
         #self.noon = datetime.datetime.now(self.location.tzinfo) + datetime.timedelta(seconds=70)
         self.sunset = self.sun['sunset']
-        #self.sunset = datetime.datetime.now(self.location.tzinfo) + datetime.timedelta(seconds=140)
+        #self.sunset = datetime.datetime.now(self.location.tzinfo) + datetime.timedelta(seconds=30)
 
 
     async def is_after(self, time, offset, tasks, *args):

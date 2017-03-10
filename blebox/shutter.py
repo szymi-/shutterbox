@@ -13,15 +13,15 @@ class ShutterManager:
     def __init__(self, address):
         self.address = address
 
-    def up(self):
+    def up(self, *args):
         url = 'http://{}/s/u'.format(self.address)
         return self._send_command(url)
 
-    def down(self):
+    def down(self, *args):
         url = 'http://{}/s/d'.format(self.address)
         return self._send_command(url)
 
-    def stop(self):
+    def stop(self, *args):
         url = 'http://{}/s/s'.format(self.address)
         return self._send_command(url)
 
@@ -43,11 +43,15 @@ class ShutterManager:
         except polling.TimeoutException:
             return False
     
-    async def tilt(self, time=1):
+    async def tilt(self, *args):
+        if not args:
+            time = 0.8
+        else:
+            time = args[0]
         await self.down()
         self.is_in_position(100)
         await self.up()
-        sleep(time)
+        await asyncio.sleep(time)
         await self.stop()
 
     @staticmethod

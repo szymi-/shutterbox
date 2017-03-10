@@ -5,7 +5,7 @@ Usage:
 
 Options:
     -a <action> --action=<action>	Action
-    -t <tilt> --tilt=<tilt>         Tilt delay [default: 1]
+    -t <tilt> --tilt=<tilt>         Tilt delay [default: 0.8]
 """
 import asyncio
 import logging
